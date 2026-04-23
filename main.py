@@ -12,5 +12,5 @@ for w in works["results"]:
     print(w["display_name"])
 
 # Example: Autocomplete author search
-authors = client.autocomplete("authors", "smith")
+authors = client.autocomplete("authors", "Russel Rey F. Lupian")
 print(authors)
