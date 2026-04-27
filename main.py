@@ -1,16 +1,31 @@
 from openalex import OpenAlexClient
 
-client = OpenAlexClient()
+def main():
+    client = OpenAlexClient()
 
-# Example: Get a specific work
-work = client.get_work("W2741809807")
-print(work["display_name"])
+    # Ask the user what they want to search
+    search_type = input("What do you want to search (work, author, institution)? ").strip().lower()
+    query = input("Enter your search term: ").strip()
 
-# Example: List works published in 2023
-works = client.list_works(filter="publication_year:2023", per_page=5)
-for w in works["results"]:
-    print(w["display_name"])
+    if search_type == "work":
+        # Search works
+        works = client.list_works(search=query, per_page=5)
+        for w in works["results"]:
+            print(w["display_name"])
 
-# Example: Autocomplete author search
-authors = client.autocomplete("authors", "Russel Rey F. Lupian")
-print(authors)
+    elif search_type == "author":
+        # Search authors
+        authors = client.autocomplete("authors", query)
+        print(authors)
+
+    elif search_type == "institution":
+        # Search institutions
+        institutions = client.list_institutions(search=query, per_page=5)
+        for inst in institutions["results"]:
+            print(inst["display_name"])
+
+    else:
+        print("Unknown search type. Please choose 'work', 'author', or 'institution'.")
+
+if __name__ == "__main__":
+    main()
